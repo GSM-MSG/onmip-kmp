@@ -1,8 +1,10 @@
 package com.msg.onmip.feature.main.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,13 +23,12 @@ import com.msg.onmip.shared.ui.theme.typography.AppFont
 
 @Composable
 fun ColorRecommendationItem(modifier: Modifier = Modifier, color: Color, text: String) {
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Box(
             modifier = Modifier.fillMaxWidth().aspectRatio(1f)
                 .clip(shape = RoundedCornerShape(12.dp))
                 .background(color = color)
         )
-        Box(modifier = Modifier.height(16.dp))
         Text(text, style = TextStyle(color = Black, fontSize = 16.sp, fontFamily = AppFont()))
     }
 }
