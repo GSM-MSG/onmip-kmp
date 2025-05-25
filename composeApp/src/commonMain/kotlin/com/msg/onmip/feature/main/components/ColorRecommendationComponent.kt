@@ -14,7 +14,7 @@ import com.msg.onmip.shared.ui.theme.color.Yellow
 fun ColorRecommendationComponent(modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
         ColorRecommendationItem(modifier = Modifier.weight(1f), color = Blue, text = "파랑")
-        ColorRecommendationItem(modifier = Modifier.width(16.dp), color = Yellow, text = "노랑")
+        ColorRecommendationItem(modifier = Modifier.weight(1f), color = Yellow, text = "노랑")
         ColorRecommendationItem(modifier = Modifier.weight(1f), color = Red, text = "빨강")
     }
 }
