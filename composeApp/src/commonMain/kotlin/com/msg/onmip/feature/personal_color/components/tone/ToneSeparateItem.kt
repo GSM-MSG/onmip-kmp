@@ -32,6 +32,8 @@ import onmip.composeapp.generated.resources.Res
 import onmip.composeapp.generated.resources.ic_green_check
 import org.jetbrains.compose.resources.painterResource
 
+val itemShape = RoundedCornerShape(12.dp)
+
 @Composable
 fun ToneSeparateItem(
     modifier: Modifier = Modifier,
@@ -40,54 +42,61 @@ fun ToneSeparateItem(
     description: String,
     onClick: () -> Unit,
 ) {
-    Box {
-        Column {
+    Column(modifier = modifier) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .clip(itemShape)
+                .clickable(onClick = onClick)
+        ) {
             Box(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .clip(RoundedCornerShape(12.dp))
+                modifier = Modifier
+                    .matchParentSize()
                     .background(color)
-                    .clickable(onClick = onClick)
             )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = description,
-                style = TextStyle(
-                    fontFamily = AppFont(),
-                    color = Black,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
+            SelectionOverlay(
+                modifier = Modifier.matchParentSize(),
+                selected = selected
             )
         }
-    }
-
-    AnimatedVisibility(
-        visible = selected,
-        enter = fadeIn(),
-        exit = fadeOut()
-    ) {
-        SelectedBoxCover()
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(
+            text = description,
+            style = TextStyle(
+                fontFamily = AppFont(),
+                color = Black,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
     }
 }
 
 @Composable
-fun SelectedBoxCover() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .clip(RoundedCornerShape(12.dp))
-            .border(3.dp, Green, RoundedCornerShape(12.dp))
-            .background(Black.copy(alpha = 0.2f))
+fun SelectionOverlay(
+    modifier: Modifier = Modifier,
+    selected: Boolean,
+) {
+    AnimatedVisibility(
+        modifier = modifier,
+        visible = selected,
+        enter = fadeIn(),
+        exit = fadeOut()
     ) {
-        Image(
+        Box(
             modifier = Modifier
-                .padding(10.dp)
-                .align(Alignment.TopEnd),
-            painter = painterResource(Res.drawable.ic_green_check),
-            contentDescription = null
-        )
+                .clip(itemShape)
+                .border(3.dp, Green, itemShape)
+                .background(Black.copy(alpha = 0.2f))
+        ) {
+            Image(
+                painter = painterResource(Res.drawable.ic_green_check),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(10.dp)
+                    .align(Alignment.TopEnd)
+            )
+        }
     }
 }
