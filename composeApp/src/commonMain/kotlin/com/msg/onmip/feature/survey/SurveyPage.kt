@@ -18,11 +18,14 @@ import com.msg.onmip.feature.survey.components.HeightInputScreen
 import com.msg.onmip.feature.survey.components.StylePreferenceScreen
 import com.msg.onmip.feature.survey.components.WeightInputScreen
 import com.msg.onmip.feature.survey.model.SurveyEffect
+import com.msg.onmip.feature.survey.viewmodel.SurveyViewModel
 import com.msg.onmip.shared.ui.components.ProgressBar
 
 @Composable
-fun SurveyPage(modifier: Modifier = Modifier) {
-    val viewModel = rememberSurveyViewModel()
+fun SurveyPage(
+    modifier: Modifier = Modifier,
+    viewModel: SurveyViewModel = rememberSurveyViewModel()
+) {
     val state by remember { derivedStateOf { viewModel.state } }
     val effects by remember { derivedStateOf { viewModel.effects } }
     val pagerState = rememberPagerState(pageCount = { 5 })
