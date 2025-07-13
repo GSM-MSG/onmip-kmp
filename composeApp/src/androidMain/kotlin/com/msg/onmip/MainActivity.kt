@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.msg.onmip.feature.main.MainScreen
+import com.msg.onmip.feature.survey.SurveyPage
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,8 +21,14 @@ class MainActivity : ComponentActivity() {
 }
 
 
+//@Preview(showSystemUi = true)
+//@Composable
+//fun MainScreenPreview() {
+//    MainScreen()
+//}
+
 @Preview(showSystemUi = true)
 @Composable
-fun MainScreenPreview() {
-    MainScreen()
+fun SurveyPagePreview() {
+    SurveyPage(modifier = Modifier.safeContentPadding())
 }
