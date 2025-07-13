@@ -47,7 +47,6 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.coil.compose)
-            implementation(libs.coil.network.okhttp)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
