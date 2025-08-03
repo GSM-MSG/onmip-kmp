@@ -48,6 +48,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.coil.compose)
             implementation(libs.koin.core)
+            implementation(libs.org.jetbrains.compose.ui.backhandler)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
