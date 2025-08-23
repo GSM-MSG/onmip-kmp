@@ -26,8 +26,9 @@ fun ProgressBar(
     animationDuration: Int = 500, // 애니메이션 지속 시간 (ms)
 ) {
     // progress 값을 애니메이션으로 부드럽게 전환
+    val targetValue = progress.coerceIn(0f, 1f) // progress를 0~1 사이로 제한
     val animatedProgress by animateFloatAsState(
-        targetValue = progress.coerceIn(0f, 1f), // progress를 0~1 사이로 제한
+        targetValue = if (targetValue > 0) targetValue else 0.05f,
         animationSpec = tween(durationMillis = animationDuration), // 애니메이션 속도와 타입 설정
         label = "ProgressAnimation"
     )

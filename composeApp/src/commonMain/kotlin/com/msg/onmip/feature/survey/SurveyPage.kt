@@ -95,7 +95,7 @@ fun SurveyPage(
                 style = TextStyle(color = Black, fontSize = 16.sp, fontFamily = AppFont())
             )
             ProgressBar(
-                progress = (state.currentPage + 1) / 5f
+                progress = state.currentPage / 5f
             )
         }
 
