@@ -102,8 +102,10 @@ class SurveyViewModel(
             "Submitting survey... Gender: ${state.gender}, Height: ${state.height}, Weight: ${state.weight}, Body Type: ${state.bodyType}, Preferred Styles: ${state.preferredStyles}"
         )
 
-        if (isSurveyValid()) {
+                if (isSurveyValid()) {
             viewModelScope.launch {
+                state = state.copy(isCompleted = true)
+                
                 addEffect(SurveyEffect.ShowLoading)
                 state = state.copy(isLoading = true)
 
@@ -120,14 +122,17 @@ class SurveyViewModel(
                     surveyRepository.submitSurvey(surveyData)
 
                     addEffect(SurveyEffect.HideLoading)
-                    addEffect(SurveyEffect.SurveyCompleted)
-                    state = state.copy(isLoading = false, isCompleted = true)
+                    state = state.copy(isLoading = false)
                     AppLogger.info("SurveyViewModel", "Survey submitted successfully")
+                    
+                    // ProgressBar 애니메이션을 위한 3초 지연 후 완료 이펙트 발생
+                    delay(3000)
+                    addEffect(SurveyEffect.SurveyCompleted)
                 } catch (e: Exception) {
                     AppLogger.error("SurveyViewModel", "Failed to submit survey", e)
                     addEffect(SurveyEffect.HideLoading)
                     addEffect(SurveyEffect.ShowError(e.message ?: "설문 제출 중 오류가 발생했습니다"))
-                    state = state.copy(isLoading = false, error = e.message)
+                    state = state.copy(isLoading = false, error = e.message, isCompleted = false)
                 }
             }
         } else {

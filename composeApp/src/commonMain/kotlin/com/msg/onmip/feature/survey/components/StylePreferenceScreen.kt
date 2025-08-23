@@ -67,10 +67,10 @@ fun StylePreferenceScreen(
         }
         CTALargeButton(
             modifier = Modifier.padding(vertical = 12.dp).background(White),
-            text = if(selectedStyles.isNotEmpty()) "${selectedStyles.size}개 선택" else "선택하기",
+            text = if(selectedStyles.isNotEmpty()) "완료하기" else "선택하기",
             isEnabled = selectedStyles.isNotEmpty(),
             onClick = {
-                onIntent(SurveyIntent.NextPage)
+                onIntent(SurveyIntent.SubmitSurvey)
             }
         )
     }

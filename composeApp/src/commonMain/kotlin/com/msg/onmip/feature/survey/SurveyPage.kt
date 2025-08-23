@@ -65,7 +65,8 @@ fun SurveyPage(
                 }
 
                 is SurveyEffect.SurveyCompleted -> {
-                    // 설문 완료 처리 (예: 네비게이션)
+                    // 설문 완료 처리 - ProgressBar가 100%로 채워진 후 처리
+                    // TODO: 메인 화면으로 이동하거나 완료 화면 표시
                 }
 
                 is SurveyEffect.ExitSurvey -> {
@@ -95,7 +96,7 @@ fun SurveyPage(
                 style = TextStyle(color = Black, fontSize = 16.sp, fontFamily = AppFont())
             )
             ProgressBar(
-                progress = state.currentPage / 5f
+                progress = if (state.isCompleted) 1.0f else state.currentPage / 5f
             )
         }
 
