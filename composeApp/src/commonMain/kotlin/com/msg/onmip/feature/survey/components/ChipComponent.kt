@@ -1,7 +1,6 @@
 package com.msg.onmip.feature.survey.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -21,24 +20,23 @@ fun ChipComponent(
     modifier: Modifier = Modifier,
     text: String,
     isSelected: Boolean,
+    maxLines: Int = Int.MAX_VALUE,
     onClick: () -> Unit,
 ) {
     Card(
-        modifier = modifier
-            .padding(end = 16.dp)
-            .clickable {
-                onClick()
-            },
-        border = if (isSelected) null else BorderStroke(1.dp, Gray01),
         shape = RoundedCornerShape(12.dp),
+        modifier = modifier,
+        border = if (isSelected) null else BorderStroke(1.dp, Gray01),
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected) Black else Color.White
-        )
+        ),
+        onClick = onClick
     ) {
         Text(
             text = text,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
             fontSize = 16.sp,
+            maxLines = maxLines,
             color = if (isSelected) White else Black
         )
     }

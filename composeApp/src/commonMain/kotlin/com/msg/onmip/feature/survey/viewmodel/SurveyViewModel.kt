@@ -102,7 +102,7 @@ class SurveyViewModel(
                 try {
                     val surveyData = SurveyData(
                         gender = state.gender!!,
-                        height = state.height.toInt(),
+                        height = state.height!!,
                         weight = state.weight.toInt(),
                         bodyType = state.bodyType!!,
                         preferredStyles = state.preferredStyles.toList()
@@ -130,7 +130,7 @@ class SurveyViewModel(
 
     private fun isSurveyValid(): Boolean {
         return state.gender != null &&
-                state.height.isNotEmpty() &&
+                state.height != null &&
                 state.weight.isNotEmpty() &&
                 state.bodyType != null &&
                 state.preferredStyles.isNotEmpty()
@@ -147,7 +147,7 @@ class SurveyViewModel(
     fun canGoNext(): Boolean {
         return when (state.currentPage) {
             0 -> state.gender != null
-            1 -> state.height.isNotEmpty()
+            1 -> state.height != null
             2 -> state.weight.isNotEmpty()
             3 -> state.bodyType != null
             4 -> state.preferredStyles.isNotEmpty()
