@@ -1,68 +1,66 @@
 package com.msg.onmip.feature.survey.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.msg.onmip.feature.survey.model.BodyType
 import com.msg.onmip.feature.survey.model.SurveyIntent
+import com.msg.onmip.shared.ui.theme.color.Black
+import com.msg.onmip.shared.ui.theme.typography.AppFont
 
 @Composable
 fun BodyTypeScreen(
     modifier: Modifier = Modifier,
-    selectedBodyType: String?,
-    onIntent: (SurveyIntent) -> Unit
+    bodyType: BodyType?,
+    onIntent: (SurveyIntent) -> Unit,
 ) {
-    val bodyTypes = listOf("마른 체형", "보통 체형", "통통한 체형")
-    
-    Box(
+    Column(
         modifier = modifier
-            .fillMaxSize()
-            .background(Color(0xFFE1F5FE)),
-        contentAlignment = Alignment.Center
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top,
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+        Text(
+            modifier = Modifier.padding(top = 20.dp, bottom = 32.dp),
+            text = "체형을 선택해주세요",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = AppFont(),
+            color = Black
+        )
+
+        // FlowRow를 사용하여 체형 옵션들을 배치
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Text(
-                text = "체형을 선택해주세요",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF0277BD)
-            )
-            Spacer(modifier = Modifier.height(32.dp))
+            val bodyTypeOptions = BodyType.entries
             
-            bodyTypes.forEach { bodyType ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 32.dp, vertical = 8.dp)
-                        .clickable { 
-                            onIntent(SurveyIntent.SelectBodyType(bodyType))
-                        }
-                        .border(
-                            width = if (selectedBodyType == bodyType) 2.dp else 1.dp,
-                            color = if (selectedBodyType == bodyType) Color(0xFF0277BD) else Color.Gray
-                        ),
-                    colors = CardDefaults.cardColors(
-                        containerColor = if (selectedBodyType == bodyType) Color(0xFFE3F2FD) else Color.White
-                    )
-                ) {
-                    Text(
-                        text = bodyType,
-                        modifier = Modifier.padding(16.dp),
-                        fontSize = 16.sp,
-                        color = if (selectedBodyType == bodyType) Color(0xFF0277BD) else Color.Black
-                    )
+            bodyTypeOptions.forEachIndexed { index, bodyTypeValue ->
+                if (index > 0) {
+                    Spacer(modifier = Modifier.width(8.dp))
                 }
+                ChipComponent(
+                    text = bodyTypeValue.text,
+                    isSelected = bodyType == bodyTypeValue,
+                    maxLines = 1,
+                    onClick = {
+                        onIntent(SurveyIntent.SelectBodyType(bodyTypeValue))
+                    }
+                )
             }
         }
     }

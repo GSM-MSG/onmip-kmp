@@ -48,12 +48,16 @@ class SurveyViewModel(
 
             is SurveyIntent.UpdateWeight -> {
                 state = state.copy(weight = intent.weight)
+                viewModelScope.launch {
+                    delay(300)
+                    handleNextPage()
+                }
             }
 
             is SurveyIntent.SelectBodyType -> {
                 AppLogger.info("SurveyViewModel", "Body type selected: ${intent.bodyType}")
                 state = state.copy(bodyType = intent.bodyType)
-                viewModelScope.launch {
+                viewModelScope.launch { 
                     delay(300)
                     handleNextPage()
                 }
@@ -107,7 +111,7 @@ class SurveyViewModel(
                     val surveyData = SurveyData(
                         gender = state.gender!!,
                         height = state.height!!,
-                        weight = state.weight!!,
+                        weight = state.weight!!, 
                         bodyType = state.bodyType!!,
                         preferredStyles = state.preferredStyles.toList()
                     )

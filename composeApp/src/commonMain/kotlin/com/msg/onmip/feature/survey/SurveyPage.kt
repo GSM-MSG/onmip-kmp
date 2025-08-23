@@ -121,7 +121,7 @@ fun SurveyPage(
                 )
 
                 3 -> BodyTypeScreen(
-                    selectedBodyType = state.bodyType,
+                    bodyType = state.bodyType,
                     onIntent = viewModel::processIntent
                 )
 

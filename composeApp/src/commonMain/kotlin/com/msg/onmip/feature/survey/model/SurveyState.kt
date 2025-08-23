@@ -5,7 +5,7 @@ data class SurveyState(
     val gender: Gender? = null,
     val height: HeightRange? = null,
     val weight: WeightRange? = null,
-    val bodyType: String? = null,
+    val bodyType: BodyType? = null,
     val preferredStyles: Set<String> = emptySet(),
     val isLoading: Boolean = false,
     val error: String? = null,
