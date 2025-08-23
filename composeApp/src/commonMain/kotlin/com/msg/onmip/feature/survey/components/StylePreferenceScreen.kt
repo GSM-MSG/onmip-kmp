@@ -1,99 +1,109 @@
 package com.msg.onmip.feature.survey.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.msg.onmip.feature.survey.model.PreferredStyle
 import com.msg.onmip.feature.survey.model.SurveyIntent
+import com.msg.onmip.shared.ui.components.CheckBox
+import com.msg.onmip.shared.ui.theme.color.Black
+import com.msg.onmip.shared.ui.theme.color.White
+import com.msg.onmip.shared.ui.theme.typography.AppFont
 
 @Composable
 fun StylePreferenceScreen(
     modifier: Modifier = Modifier,
-    selectedStyles: Set<String>,
-    onIntent: (SurveyIntent) -> Unit
+    selectedStyles: Set<PreferredStyle>,
+    onIntent: (SurveyIntent) -> Unit,
 ) {
-    val styleOptions = listOf(
-        "캐주얼", "스포티", "클래식", "빈티지", "스트릿", 
-        "미니멀", "로맨틱", "모던", "레트로", "아방가르드"
-    )
-    
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Color(0xFFF3E5F5)),
-        contentAlignment = Alignment.Center
-    ) {
+    Column(modifier = modifier.fillMaxSize()) {
         Column(
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.verticalScroll(rememberScrollState())
+            verticalArrangement = Arrangement.Top,
         ) {
             Text(
+                modifier = Modifier.padding(top = 20.dp, bottom = 12.dp),
                 text = "선호하는 스타일을 선택해주세요",
-                fontSize = 24.sp,
+                fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF7B1FA2)
+                fontFamily = AppFont(),
+                color = Black
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "여러 개 선택 가능합니다",
-                fontSize = 16.sp,
-                color = Color(0xFF424242)
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-            
-            styleOptions.chunked(2).forEach { rowStyles ->
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    rowStyles.forEach { style ->
-                        Card(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(8.dp)
-                                .clickable {
-                                    onIntent(SurveyIntent.ToggleStyle(style))
-                                }
-                                .border(
-                                    width = if (selectedStyles.contains(style)) 2.dp else 1.dp,
-                                    color = if (selectedStyles.contains(style)) Color(0xFF7B1FA2) else Color.Gray
-                                ),
-                            colors = CardDefaults.cardColors(
-                                containerColor = if (selectedStyles.contains(style)) Color(0xFFF3E5F5) else Color.White
-                            )
-                        ) {
-                            Text(
-                                text = style,
-                                modifier = Modifier.padding(16.dp),
-                                fontSize = 14.sp,
-                                color = if (selectedStyles.contains(style)) Color(0xFF7B1FA2) else Color.Black
-                            )
-                        }
+            // 각 스타일 옵션을 한 줄씩 표시
+            PreferredStyle.entries.forEach { style ->
+                PreferenceStyleItem(
+                    style = style,
+                    isSelected = selectedStyles.contains(style),
+                    onClick = {
+                        onIntent(SurveyIntent.ToggleStyle(style))
                     }
-                }
-            }
-            
-            Spacer(modifier = Modifier.height(32.dp))
-            Button(
-                onClick = { onIntent(SurveyIntent.SubmitSurvey) },
-                enabled = selectedStyles.isNotEmpty(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF7B1FA2)
                 )
-            ) {
-                Text("완료", color = Color.White)
             }
         }
+        CTALargeButton(
+            modifier = Modifier.padding(vertical = 12.dp).background(White),
+            text = if(selectedStyles.isNotEmpty()) "${selectedStyles.size}개 선택" else "선택하기",
+            isEnabled = selectedStyles.isNotEmpty(),
+            onClick = {
+                onIntent(SurveyIntent.NextPage)
+            }
+        )
     }
-} 
+}
+
+@Composable
+private fun PreferenceStyleItem(
+    modifier: Modifier = Modifier,
+    style: PreferredStyle,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 12.dp)
+            .clickable(
+                onClick = onClick,
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }),
+    ) {
+        CheckBox(
+            isChecked = isSelected,
+            onClick = onClick
+        )
+        Spacer(modifier = Modifier.width(12.dp))
+
+        Text(
+            text = style.text,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Normal,
+            color = Black,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
