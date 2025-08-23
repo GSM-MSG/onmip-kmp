@@ -1,62 +1,66 @@
 package com.msg.onmip.feature.survey.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.msg.onmip.feature.survey.model.SurveyIntent
+import com.msg.onmip.feature.survey.model.WeightRange
+import com.msg.onmip.shared.ui.theme.color.Black
+import com.msg.onmip.shared.ui.theme.typography.AppFont
 
 @Composable
 fun WeightInputScreen(
     modifier: Modifier = Modifier,
-    weight: String,
-    onIntent: (SurveyIntent) -> Unit
+    weight: WeightRange?,
+    onIntent: (SurveyIntent) -> Unit,
 ) {
-    Box(
+    Column(
         modifier = modifier
-            .fillMaxSize()
-            .background(Color(0xFFFCE4EC)),
-        contentAlignment = Alignment.Center
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top,
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+        Text(
+            modifier = Modifier.padding(top = 20.dp, bottom = 32.dp),
+            text = "몸무게를 선택해주세요",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = AppFont(),
+            color = Black
+        )
+
+        // FlowRow를 사용하여 몸무게 옵션들을 배치
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Text(
-                text = "몸무게를 입력해주세요",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFC2185B)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "kg 단위로 입력해주세요",
-                fontSize = 16.sp,
-                color = Color(0xFF424242)
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-            OutlinedTextField(
-                value = weight,
-                onValueChange = { onIntent(SurveyIntent.UpdateWeight(it)) },
-                label = { Text("몸무게 (kg)") },
-                singleLine = true,
-                modifier = Modifier.width(200.dp)
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-            Button(
-                onClick = { onIntent(SurveyIntent.NextPage) },
-                enabled = weight.isNotEmpty(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFC2185B)
+            val weightOptions = WeightRange.entries
+            
+            weightOptions.forEachIndexed { index, weightValue ->
+                if (index > 0) {
+                    Spacer(modifier = Modifier.width(8.dp))
+                }
+                ChipComponent(
+                    text = weightValue.text,
+                    isSelected = weight == weightValue,
+                    maxLines = 1,
+                    onClick = {
+                        onIntent(SurveyIntent.UpdateWeight(weightValue))
+                    }
                 )
-            ) {
-                Text("다음", color = Color.White)
             }
         }
     }

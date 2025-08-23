@@ -5,7 +5,7 @@ sealed class SurveyIntent {
     data object PreviousPage : SurveyIntent()
     data class SelectGender(val gender: Gender) : SurveyIntent()
     data class UpdateHeight(val height: HeightRange) : SurveyIntent()
-    data class UpdateWeight(val weight: String) : SurveyIntent()
+    data class UpdateWeight(val weight: WeightRange) : SurveyIntent()
     data class SelectBodyType(val bodyType: String) : SurveyIntent()
     data class ToggleStyle(val style: String) : SurveyIntent()
     data object SubmitSurvey : SurveyIntent()

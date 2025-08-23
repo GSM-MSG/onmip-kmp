@@ -40,6 +40,10 @@ class SurveyViewModel(
 
             is SurveyIntent.UpdateHeight -> {
                 state = state.copy(height = intent.height)
+                viewModelScope.launch {
+                    delay(300)
+                    handleNextPage()
+                }
             }
 
             is SurveyIntent.UpdateWeight -> {
@@ -103,7 +107,7 @@ class SurveyViewModel(
                     val surveyData = SurveyData(
                         gender = state.gender!!,
                         height = state.height!!,
-                        weight = state.weight.toInt(),
+                        weight = state.weight!!,
                         bodyType = state.bodyType!!,
                         preferredStyles = state.preferredStyles.toList()
                     )
@@ -131,7 +135,7 @@ class SurveyViewModel(
     private fun isSurveyValid(): Boolean {
         return state.gender != null &&
                 state.height != null &&
-                state.weight.isNotEmpty() &&
+                state.weight != null &&
                 state.bodyType != null &&
                 state.preferredStyles.isNotEmpty()
     }
@@ -148,7 +152,7 @@ class SurveyViewModel(
         return when (state.currentPage) {
             0 -> state.gender != null
             1 -> state.height != null
-            2 -> state.weight.isNotEmpty()
+            2 -> state.weight != null
             3 -> state.bodyType != null
             4 -> state.preferredStyles.isNotEmpty()
             else -> false

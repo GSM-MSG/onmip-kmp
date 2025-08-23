@@ -1,10 +1,15 @@
 package com.msg.onmip.feature.survey.model
 
 enum class HeightRange(val text: String) {
-    RANGE_141_150("141-150cm"),
-    RANGE_151_160("151-160cm"),
-    RANGE_161_170("161-170cm"),
-    RANGE_171_180("171-180cm"),
-    RANGE_181_190("181-190cm"),
+    RANGE_140_145("140-145cm"),
+    RANGE_146_150("146-150cm"),
+    RANGE_151_155("151-155cm"),
+    RANGE_156_160("156-160cm"),
+    RANGE_161_165("161-165cm"),
+    RANGE_166_170("166-170cm"),
+    RANGE_171_175("171-175cm"),
+    RANGE_176_180("176-180cm"),
+    RANGE_181_185("181-185cm"),
+    RANGE_186_190("186-190cm"),
     RANGE_191_PLUS("191cm+")
 }
