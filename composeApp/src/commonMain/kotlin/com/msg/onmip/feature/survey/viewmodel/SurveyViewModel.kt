@@ -3,19 +3,20 @@ package com.msg.onmip.feature.survey.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.msg.onmip.feature.survey.model.SurveyEffect
 import com.msg.onmip.feature.survey.model.SurveyIntent
 import com.msg.onmip.feature.survey.model.SurveyState
 import com.msg.onmip.shared.model.SurveyData
 import com.msg.onmip.shared.repository.SurveyRepository
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.msg.onmip.shared.utils.Logger as AppLogger
 
 class SurveyViewModel(
-    private val coroutineScope: CoroutineScope,
     private val surveyRepository: SurveyRepository,
-) {
+) : ViewModel() {
     var state by mutableStateOf(SurveyState())
         private set
 
@@ -31,7 +32,10 @@ class SurveyViewModel(
             is SurveyIntent.SelectGender -> {
                 AppLogger.info("SurveyViewModel", "Gender selected: ${intent.gender}")
                 state = state.copy(gender = intent.gender)
-                handleNextPage()
+                viewModelScope.launch {
+                    delay(300)
+                    handleNextPage()
+                }
             }
 
             is SurveyIntent.UpdateHeight -> {
@@ -45,7 +49,10 @@ class SurveyViewModel(
             is SurveyIntent.SelectBodyType -> {
                 AppLogger.info("SurveyViewModel", "Body type selected: ${intent.bodyType}")
                 state = state.copy(bodyType = intent.bodyType)
-                handleNextPage()
+                viewModelScope.launch {
+                    delay(300)
+                    handleNextPage()
+                }
             }
 
             is SurveyIntent.ToggleStyle -> {
@@ -59,6 +66,7 @@ class SurveyViewModel(
             }
 
             is SurveyIntent.SubmitSurvey -> handleSubmitSurvey()
+            is SurveyIntent.HandleBackPress -> handleBackPress()
         }
     }
 
@@ -87,7 +95,7 @@ class SurveyViewModel(
         )
 
         if (isSurveyValid()) {
-            coroutineScope.launch {
+            viewModelScope.launch {
                 addEffect(SurveyEffect.ShowLoading)
                 state = state.copy(isLoading = true)
 
@@ -144,6 +152,16 @@ class SurveyViewModel(
             3 -> state.bodyType != null
             4 -> state.preferredStyles.isNotEmpty()
             else -> false
+        }
+    }
+
+    private fun handleBackPress() {
+        if (state.currentPage > 0) {
+            // 이전 페이지로 이동
+            handlePreviousPage()
+        } else {
+            // 첫 번째 페이지에서 뒤로 가기 시 SurveyPage 종료
+            addEffect(SurveyEffect.ExitSurvey)
         }
     }
 } 

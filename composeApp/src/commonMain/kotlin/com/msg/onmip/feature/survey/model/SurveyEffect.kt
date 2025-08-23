@@ -6,4 +6,5 @@ sealed class SurveyEffect {
     data object HideLoading : SurveyEffect()
     data class ShowError(val message: String) : SurveyEffect()
     data object SurveyCompleted : SurveyEffect()
+    data object ExitSurvey : SurveyEffect()
 } 

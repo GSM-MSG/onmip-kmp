@@ -9,4 +9,5 @@ sealed class SurveyIntent {
     data class SelectBodyType(val bodyType: String) : SurveyIntent()
     data class ToggleStyle(val style: String) : SurveyIntent()
     data object SubmitSurvey : SurveyIntent()
+    data object HandleBackPress : SurveyIntent()
 } 
