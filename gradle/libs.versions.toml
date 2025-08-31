@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.2"
+agp = "8.11.1"
 android-compileSdk = "35"
 android-minSdk = "24"
 android-targetSdk = "35"
@@ -17,6 +17,7 @@ kotlin = "2.1.10"
 kotlinx-coroutines = "1.10.1"
 coil = "3.2.0"
 koin = "3.5.3"
+orbit = "10.0.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -36,6 +37,9 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" 
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 org-jetbrains-compose-ui-backhandler = { group = "org.jetbrains.compose.ui", name = "ui-backhandler", version.ref = "compose-multiplatform" }
+orbit-core = { group = "org.orbit-mvi", name = "orbit-core", version.ref = "orbit" }
+orbit-viewmodel = { group = "org.orbit-mvi", name = "orbit-viewmodel", version.ref = "orbit" }
+orbit-compose = { group = "org.orbit-mvi", name = "orbit-compose", version.ref = "orbit" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

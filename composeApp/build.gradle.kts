@@ -49,6 +49,9 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.koin.core)
             implementation(libs.org.jetbrains.compose.ui.backhandler)
+            implementation(libs.orbit.core)
+            implementation(libs.orbit.viewmodel)
+            implementation(libs.orbit.compose)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
