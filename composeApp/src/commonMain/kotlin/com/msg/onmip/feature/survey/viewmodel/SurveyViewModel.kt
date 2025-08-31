@@ -10,7 +10,10 @@ import com.msg.onmip.feature.survey.model.SurveyIntent
 import com.msg.onmip.feature.survey.model.SurveyState
 import com.msg.onmip.shared.model.SurveyData
 import com.msg.onmip.shared.repository.SurveyRepository
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import com.msg.onmip.shared.utils.Logger as AppLogger
 
@@ -20,8 +23,8 @@ class SurveyViewModel(
     var state by mutableStateOf(SurveyState())
         private set
 
-    private val _effects = mutableListOf<SurveyEffect>()
-    val effects: List<SurveyEffect> get() = _effects.toList()
+    private val _effects = Channel<SurveyEffect>()
+    val effects: Flow<SurveyEffect> get() = _effects.receiveAsFlow()
 
     fun processIntent(intent: SurveyIntent) {
         AppLogger.debug("SurveyViewModel", "Processing intent: $intent")
@@ -57,7 +60,7 @@ class SurveyViewModel(
             is SurveyIntent.SelectBodyType -> {
                 AppLogger.info("SurveyViewModel", "Body type selected: ${intent.bodyType}")
                 state = state.copy(bodyType = intent.bodyType)
-                viewModelScope.launch { 
+                viewModelScope.launch {
                     delay(300)
                     handleNextPage()
                 }
@@ -83,7 +86,7 @@ class SurveyViewModel(
             val nextPage = state.currentPage + 1
             AppLogger.debug("SurveyViewModel", "Moving to next page: $nextPage")
             state = state.copy(currentPage = nextPage)
-            addEffect(SurveyEffect.NavigateToPage(nextPage))
+            sendEffect(SurveyEffect.NavigateToPage(nextPage))
         }
     }
 
@@ -92,7 +95,7 @@ class SurveyViewModel(
             val previousPage = state.currentPage - 1
             AppLogger.debug("SurveyViewModel", "Moving to previous page: $previousPage")
             state = state.copy(currentPage = previousPage)
-            addEffect(SurveyEffect.NavigateToPage(previousPage))
+            sendEffect(SurveyEffect.NavigateToPage(previousPage))
         }
     }
 
@@ -102,18 +105,18 @@ class SurveyViewModel(
             "Submitting survey... Gender: ${state.gender}, Height: ${state.height}, Weight: ${state.weight}, Body Type: ${state.bodyType}, Preferred Styles: ${state.preferredStyles}"
         )
 
-                if (isSurveyValid()) {
+        if (isSurveyValid()) {
             viewModelScope.launch {
                 state = state.copy(isCompleted = true)
-                
-                addEffect(SurveyEffect.ShowLoading)
+
+                sendEffect(SurveyEffect.ShowLoading)
                 state = state.copy(isLoading = true)
 
                 try {
                     val surveyData = SurveyData(
                         gender = state.gender!!,
                         height = state.height!!,
-                        weight = state.weight!!, 
+                        weight = state.weight!!,
                         bodyType = state.bodyType!!,
                         preferredStyles = state.preferredStyles.toList()
                     )
@@ -121,23 +124,23 @@ class SurveyViewModel(
                     AppLogger.debug("SurveyViewModel", "Survey data: $surveyData")
                     surveyRepository.submitSurvey(surveyData)
 
-                    addEffect(SurveyEffect.HideLoading)
+                    sendEffect(SurveyEffect.HideLoading)
                     state = state.copy(isLoading = false)
                     AppLogger.info("SurveyViewModel", "Survey submitted successfully")
-                    
+
                     // ProgressBar 애니메이션을 위한 3초 지연 후 완료 이펙트 발생
                     delay(3000)
-                    addEffect(SurveyEffect.SurveyCompleted)
+                    sendEffect(SurveyEffect.SurveyCompleted)
                 } catch (e: Exception) {
                     AppLogger.error("SurveyViewModel", "Failed to submit survey", e)
-                    addEffect(SurveyEffect.HideLoading)
-                    addEffect(SurveyEffect.ShowError(e.message ?: "설문 제출 중 오류가 발생했습니다"))
+                    sendEffect(SurveyEffect.HideLoading)
+                    sendEffect(SurveyEffect.ShowError(e.message ?: "설문 제출 중 오류가 발생했습니다"))
                     state = state.copy(isLoading = false, error = e.message, isCompleted = false)
                 }
             }
         } else {
             AppLogger.warning("SurveyViewModel", "Survey validation failed")
-            addEffect(SurveyEffect.ShowError("모든 필수 항목을 입력해주세요"))
+            sendEffect(SurveyEffect.ShowError("모든 필수 항목을 입력해주세요"))
         }
     }
 
@@ -149,12 +152,8 @@ class SurveyViewModel(
                 state.preferredStyles.isNotEmpty()
     }
 
-    private fun addEffect(effect: SurveyEffect) {
-        _effects.add(effect)
-    }
-
-    fun clearEffects() {
-        _effects.clear()
+    private fun sendEffect(effect: SurveyEffect) = viewModelScope.launch {
+        _effects.send(effect)
     }
 
     fun canGoNext(): Boolean {
@@ -174,7 +173,7 @@ class SurveyViewModel(
             handlePreviousPage()
         } else {
             // 첫 번째 페이지에서 뒤로 가기 시 SurveyPage 종료
-            addEffect(SurveyEffect.ExitSurvey)
+            sendEffect(SurveyEffect.ExitSurvey)
         }
     }
 } 

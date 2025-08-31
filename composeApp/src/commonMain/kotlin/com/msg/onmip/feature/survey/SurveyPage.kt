@@ -45,8 +45,8 @@ fun SurveyPage(
     val pagerState = rememberPagerState(pageCount = { 5 })
 
     // Effects 처리
-    LaunchedEffect(effects) {
-        effects.forEach { effect ->
+    LaunchedEffect(key1 = Unit) {
+        effects.collect { effect ->
             when (effect) {
                 is SurveyEffect.NavigateToPage -> {
                     pagerState.animateScrollToPage(page = effect.page)
@@ -74,7 +74,6 @@ fun SurveyPage(
                 }
             }
         }
-        viewModel.clearEffects()
     }
 
     // 페이지 상태 동기화
