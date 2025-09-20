@@ -14,7 +14,7 @@ enum class PersonalColorType(
     val fluorescent: String,
     val contrast: String,
     val bestColors: String,
-    val notes: String
+    val notes: String,
 ) {
     /**
      * 봄클리어 (Spring Clear)
@@ -33,8 +33,8 @@ enum class PersonalColorType(
         brightness = "중저명도~극고명도",
         saturation = "고채도",
         temperature = "웜~쿨",
-        blueGray = "청○, 탁X",
-        fluorescent = "형광기○",
+        blueGray = "청O, 탁X",
+        fluorescent = "형광기O",
         contrast = "상~중상",
         bestColors = "빨간색",
         notes = "8타입/12타입 분류: 봄브라이트, 여름라이트로 오진나는 경우 많음"
@@ -58,7 +58,7 @@ enum class PersonalColorType(
         saturation = "중채도~고채도",
         temperature = "극웜~미지근웜",
         blueGray = "청O, 탁△",
-        fluorescent = "형광기○",
+        fluorescent = "형광기O",
         contrast = "중상~중",
         bestColors = "주황색",
         notes = "8타입/12타입 분류: 봄브라이트"
@@ -80,8 +80,8 @@ enum class PersonalColorType(
         brightness = "고명도",
         saturation = "저채도~중고채도",
         temperature = "웜~미지근쿨",
-        blueGray = "청○, 탁x",
-        fluorescent = "형광기○",
+        blueGray = "청O, 탁X",
+        fluorescent = "형광기O",
         contrast = "중~중하",
         bestColors = "노란색",
         notes = ""
@@ -104,8 +104,8 @@ enum class PersonalColorType(
         brightness = "중고명도~고명도",
         saturation = "저채도~중저채도",
         temperature = "웜~미지근쿨",
-        blueGray = "청○, 탁○",
-        fluorescent = "형광기x",
+        blueGray = "청O, 탁O",
+        fluorescent = "형광기X",
         contrast = "중~중하",
         bestColors = "분홍색",
         notes = "8타입/12타입 분류: 봄라이트 베스트 가을뮤트 세컨드, 여름라이트로 오진나는 경우 많음"
@@ -129,7 +129,7 @@ enum class PersonalColorType(
         saturation = "중저채도~저채도",
         temperature = "쿨~미지근웜",
         blueGray = "청○, 탁△",
-        fluorescent = "형광기○",
+        fluorescent = "형광기O",
         contrast = "중~중하",
         bestColors = "하늘색",
         notes = "봄라이트로 오진나는 경우 많음 (극단적인 쿨톤의 색보단 미지근한 웜톤의 색이 베스트)"
@@ -152,7 +152,7 @@ enum class PersonalColorType(
         saturation = "중저채도~저채도",
         temperature = "쿨~미지근웜",
         blueGray = "청△, 탁△",
-        fluorescent = "형광기x",
+        fluorescent = "형광기X",
         contrast = "중~중하",
         bestColors = "하늘색 (밀키 버전)",
         notes = ""
@@ -176,7 +176,7 @@ enum class PersonalColorType(
         saturation = "중저채도~중고채도",
         temperature = "극쿨~미지근쿨",
         blueGray = "청○, 탁△",
-        fluorescent = "형광기○",
+        fluorescent = "형광기O",
         contrast = "상~중",
         bestColors = "파란색",
         notes = "8타입/12타입 분류: 여름라이트/여름브라이트, 여름라이트 베스트 겨울딥/겨울브라이트 세컨드, 봄라이트로 오진나는 경우 많음 (코랄 메이크업 가능)"
@@ -198,8 +198,8 @@ enum class PersonalColorType(
         brightness = "중저명도~중고명도",
         saturation = "저채도~중저채도",
         temperature = "쿨~미지근웜",
-        blueGray = "청x, 탁○",
-        fluorescent = "형광기×",
+        blueGray = "청X, 탁O",
+        fluorescent = "형광기X",
         contrast = "중~중하",
         bestColors = "회색",
         notes = ""
@@ -222,8 +222,8 @@ enum class PersonalColorType(
         brightness = "저명도~중고명도",
         saturation = "저채도~중채도",
         temperature = "미지근쿨~미지근웜",
-        blueGray = "청△, 탁○",
-        fluorescent = "형광기×",
+        blueGray = "청△, 탁O",
+        fluorescent = "형광기X",
         contrast = "상~중",
         bestColors = "보라색",
         notes = "8타입/12타입 분류: 저명도 여름뮤트/저채도 겨울딥"
@@ -245,8 +245,8 @@ enum class PersonalColorType(
         brightness = "중저명도~중고명도",
         saturation = "저채도~중저채도",
         temperature = "웜~미지근쿨",
-        blueGray = "청×, 탁○",
-        fluorescent = "형광기×",
+        blueGray = "청X, 탁O",
+        fluorescent = "형광기X",
         contrast = "중하~하",
         bestColors = "회색",
         notes = ""
@@ -269,8 +269,8 @@ enum class PersonalColorType(
         brightness = "중저명도~중고명도",
         saturation = "중저채도~중고채도",
         temperature = "극웜~미지근웜",
-        blueGray = "청△, 탁○",
-        fluorescent = "형광기×",
+        blueGray = "청△, 탁O",
+        fluorescent = "형광기X",
         contrast = "중상~중",
         bestColors = "카키색",
         notes = "8타입/12타입 분류: 가을스트롱"
@@ -292,8 +292,8 @@ enum class PersonalColorType(
         brightness = "저명도~중고명도",
         saturation = "저채도~중고채도",
         temperature = "웜~미지근쿨",
-        blueGray = "청△, 탁○",
-        fluorescent = "형광기×",
+        blueGray = "청△, 탁O",
+        fluorescent = "형광기X",
         contrast = "상~중상",
         bestColors = "갈색",
         notes = ""
@@ -316,8 +316,8 @@ enum class PersonalColorType(
         brightness = "중저명도~고명도",
         saturation = "저채도~중저채도",
         temperature = "웜~미지근쿨",
-        blueGray = "청△, 탁○",
-        fluorescent = "형광기×",
+        blueGray = "청△, 탁O",
+        fluorescent = "형광기X",
         contrast = "중~중하",
         bestColors = "노란색",
         notes = "8타입/12타입 분류: 라이트그레이시 베스트 가을뮤트, 여름라이트로 오진나는 경우 많음"
@@ -340,7 +340,7 @@ enum class PersonalColorType(
         saturation = "저채도~중고채도",
         temperature = "쿨~미지근웜",
         blueGray = "청○, 탁△",
-        fluorescent = "형광기×",
+        fluorescent = "형광기X",
         contrast = "극상~중상",
         bestColors = "검은색",
         notes = ""
@@ -363,7 +363,7 @@ enum class PersonalColorType(
         brightness = "저명도~중저명도/극고명도",
         saturation = "중고채도~고채도",
         temperature = "극쿨~미지근쿨",
-        blueGray = "청○, 탁x",
+        blueGray = "청O, 탁X",
         fluorescent = "형광기△",
         contrast = "극상~중상",
         bestColors = "남색",
@@ -387,8 +387,8 @@ enum class PersonalColorType(
         brightness = "저명도~중고명도/극고명도",
         saturation = "중채도~고채도",
         temperature = "쿨~미지근웜",
-        blueGray = "청○, 탁x",
-        fluorescent = "형광기○",
+        blueGray = "청O, 탁X",
+        fluorescent = "형광기O",
         contrast = "극상~중상",
         bestColors = "보라색",
         notes = "8타입/12타입 분류: 겨울브라이트"
@@ -412,7 +412,7 @@ enum class PersonalColorType(
         saturation = "저채도~중고채도",
         temperature = "쿨~미지근웜",
         blueGray = "청O, 탁○",
-        fluorescent = "형광기×",
+        fluorescent = "형광기X",
         contrast = "상~중상",
         bestColors = "하늘색",
         notes = "8타입/12타입 분류: 겨울브라이트+여름 뮤트컬러 서브로 활용/여름뮤트+대비감 필수, 가을소프트로 오진나는 경우 많음 (mlbb 베스트)"
@@ -423,8 +423,16 @@ enum class PersonalColorType(
      * @param season 조회할 계절 (봄, 여름, 가을, 겨울)
      * @return 해당 계절의 퍼스널 컬러 타입 리스트
      */
-    fun getBySeason(season: String): List<PersonalColorType> {
-        return values().filter { it.season == season }
+
+    companion object {
+        /**
+         * 계절별 퍼스널 컬러 타입을 조회하는 함수
+         * @param season 조회할 계절 (봄, 여름, 가을, 겨울)
+         * @return 해당 계절의 퍼스널 컬러 타입 리스트
+         */
+        fun getBySeason(season: String): List<PersonalColorType> {
+            return entries.filter { it.season == season }
+        }
     }
 
     /**
