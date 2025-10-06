@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.msg.onmip.feature.survey.model.SurveyEffect
 import com.msg.onmip.feature.survey.model.SurveyIntent
 import com.msg.onmip.feature.survey.model.SurveyState
-import com.msg.onmip.shared.model.SurveyData
+import com.msg.onmip.shared.model.survey.SurveyData
 import com.msg.onmip.shared.repository.SurveyRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay

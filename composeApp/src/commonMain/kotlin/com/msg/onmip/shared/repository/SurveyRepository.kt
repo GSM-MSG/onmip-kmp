@@ -1,6 +1,6 @@
 package com.msg.onmip.shared.repository
 
-import com.msg.onmip.shared.model.SurveyData
+import com.msg.onmip.shared.model.survey.SurveyData
 
 interface SurveyRepository {
     suspend fun submitSurvey(surveyData: SurveyData): Result<Unit>

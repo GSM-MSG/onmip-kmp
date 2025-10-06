@@ -1,4 +1,4 @@
-package com.msg.onmip.shared.model
+package com.msg.onmip.shared.model.survey
 
 import com.msg.onmip.feature.survey.model.Gender
 import com.msg.onmip.feature.survey.model.HeightRange
